@@ -1,0 +1,215 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes útiles
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{array}
+
+\geometry{margin=2.5cm}
+
+\title{System Requirements Document (SRD) \\ Sistema de Gestión Documental (SGD)}
+\author{Nombre de la Organización}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ======================================================
+\section{Introducción}
+
+\subsection{Propósito del documento}
+Este documento define los requisitos funcionales, técnicos y de gestión para el desarrollo del Sistema de Gestión Documental (SGD) conforme a las normas ISO 15489, 30301, 23081, 16175 y 26102. Su objetivo es garantizar la autenticidad, integridad, trazabilidad y disponibilidad de los documentos durante todo su ciclo de vida.
+
+\subsection{Alcance}
+El sistema permitirá:
+\begin{itemize}
+    \item Capturar, registrar y clasificar documentos electrónicos y digitalizados.
+    \item Gestionar metadatos según ISO 23081.
+    \item Controlar acceso, roles y trazabilidad de uso mediante microservicio de usuarios.
+    \item Garantizar retención y disposición final conforme a TRD.
+    \item Integrarse con otros sistemas mediante eventos RabbitMQ y API REST/gRPC.
+\end{itemize}
+
+\subsection{Definiciones, acrónimos y abreviaturas}
+\begin{itemize}
+    \item \textbf{SGD}: Sistema de Gestión Documental.
+    \item \textbf{TRD}: Tabla de Retención Documental.
+    \item \textbf{ISO}: Organización Internacional de Normalización.
+    \item \textbf{API}: Interfaz de Programación de Aplicaciones.
+\end{itemize}
+
+% ======================================================
+\section{Marco Normativo}
+\begin{longtable}{p{3cm}p{7cm}p{5cm}}
+\toprule
+\textbf{Norma ISO} & \textbf{Título} & \textbf{Aplicación al sistema} \\
+\midrule
+ISO 15489-1:2016 & Información y documentación — Gestión de documentos & Define procesos y principios de gestión documental \\
+ISO 30301:2019 & Sistema de gestión para documentos — Requisitos & Establece requisitos organizacionales y auditoría \\
+ISO 23081 & Metadatos para gestión de documentos & Define los metadatos esenciales y su gestión \\
+ISO 16175 & Requisitos funcionales para sistemas electrónicos & Determina funciones que debe cumplir el software \\
+ISO 26102:2019 & Requisitos técnicos y de conformidad para software SGD & Define requisitos técnicos y de calidad del software \\
+\bottomrule
+\end{longtable}
+
+% ======================================================
+\section{Requisitos Funcionales}
+
+\subsection{Captura y Registro de Documentos}
+\begin{itemize}
+    \item Registro manual o automático desde correo, escáner, APIs.
+    \item Asignación de identificador único (UUID).
+    \item Captura de metadatos mínimos obligatorios.
+\end{itemize}
+
+\subsection{Clasificación Documental}
+\begin{itemize}
+    \item Aplicación de serie y subserie documental (TRD).
+    \item Clasificaciones múltiples: proceso, tipo, proyecto.
+    \item Registro de relaciones entre documentos (versiones, anexos).
+\end{itemize}
+
+\subsection{Control de Versiones}
+\begin{itemize}
+    \item Historial completo de versiones.
+    \item Registro de autor, fecha y comentario por modificación.
+    \item Restauración de versiones anteriores sin pérdida de integridad.
+\end{itemize}
+
+\subsection{Acceso y Seguridad}
+\begin{itemize}
+    \item Control de acceso basado en microservicio de usuarios.
+    \item Auditoría de acciones con hash encadenado (integridad ISO 16175).
+    \item Gestión de permisos y confidencialidad.
+\end{itemize}
+
+\subsection{Búsqueda e Indexación}
+\begin{itemize}
+    \item Búsqueda por texto libre y metadatos.
+    \item Filtros por fecha, tipo documental, palabras clave.
+    \item Integración con motor OpenSearch para índices optimizados.
+\end{itemize}
+
+\subsection{Retención y Disposición Final}
+\begin{itemize}
+    \item Integración con TRD configurable.
+    \item Notificación de documentos próximos a disposición final.
+    \item Registro de eliminación o transferencia con trazabilidad.
+\end{itemize}
+
+\subsection{Auditoría y Trazabilidad}
+\begin{itemize}
+    \item Registro de todas las acciones sobre documentos.
+    \item Exportación de auditorías en PDF/A o XML.
+    \item Encadenamiento de hash para integridad.
+\end{itemize}
+
+\subsection{Interoperabilidad}
+\begin{itemize}
+    \item Importación/exportación de documentos y metadatos (JSON, CSV, XML, PDF/A).
+    \item Integración con APIs REST/gRPC.
+    \item Cumplimiento de firma electrónica XAdES/PAdES.
+\end{itemize}
+
+% ======================================================
+\section{Requisitos Técnicos}
+
+\subsection{Arquitectura General}
+\begin{itemize}
+    \item Arquitectura modular Rust + Python.
+    \item Soporte para on-premise y despliegue en contenedores.
+    \item Base de datos PostgreSQL con metadatos JSONB.
+\end{itemize}
+
+\subsection{Metadatos}
+\begin{longtable}{p{3cm}p{5cm}p{4cm}p{3cm}}
+\toprule
+\textbf{Categoría} & \textbf{Campo} & \textbf{Descripción} & \textbf{Obligatorio} \\
+\midrule
+Identificación & ID único & Identificador inalterable del documento & Sí \\
+Contexto & Productor / Unidad & Área responsable & Sí \\
+Contenido & Asunto / Título & Nombre del documento & Sí \\
+Fecha & Fecha de creación & Timestamp del registro & Sí \\
+Estructura & Formato & Tipo de archivo (PDF, DOCX, etc.) & Sí \\
+Relación & Documento relacionado & ID o referencia cruzada & No \\
+Gestión & Estado & Borrador, vigente, archivado & Sí \\
+Seguridad & Nivel de acceso & Público, interno, confidencial & Sí \\
+\bottomrule
+\end{longtable}
+
+\subsection{Seguridad y Rendimiento}
+\begin{itemize}
+    \item Cifrado TLS 1.3 y AES-256 en reposo.
+    \item Autenticación multifactor.
+    \item Escalabilidad mínima: 10.000 usuarios concurrentes.
+    \item Búsqueda <2 segundos por consulta.
+\end{itemize}
+
+\subsection{Conformidad y Validación}
+\begin{itemize}
+    \item Documentación de pruebas unitarias y funcionales.
+    \item Trazabilidad entre requisitos ISO y funcionalidades.
+\end{itemize}
+
+% ======================================================
+\section{Requisitos de Gestión Documental}
+\begin{itemize}
+    \item Registro de políticas de gestión documental.
+    \item Roles: Administrador, Productor, Usuario final, Auditor.
+    \item Flujo de aprobación y validación documental.
+    \item Indicadores: documentos creados, tiempos de acceso, cumplimiento de TRD.
+\end{itemize}
+
+% ======================================================
+\section{Esquema de Metadatos y Crosswalk}
+\begin{longtable}{p{3cm}p{3cm}p{3cm}p{3cm}p{2cm}}
+\toprule
+\textbf{Campo ISO 23081} & \textbf{Dublin Core} & \textbf{Schema.org} & \textbf{Tipo} & \textbf{Req} \\
+\midrule
+Identificador & Identifier & identifier & Texto & Sí \\
+Título / Asunto & Title & name & Texto & Sí \\
+Productor & Creator & creator & Texto & Sí \\
+Fecha & Date & dateCreated & Fecha & Sí \\
+Tipo documental & Type & genre & Texto & Sí \\
+Palabras clave & Subject & keywords & Texto & No \\
+Descripción & Description & description & Texto & No \\
+Estado & Status & creativeWorkStatus & Enumerado & Sí \\
+Nivel de acceso & AccessRights & accessMode & Enumerado & Sí \\
+\bottomrule
+\end{longtable}
+
+% ======================================================
+\section{Anexos}
+
+\subsection{Glosario}
+\begin{itemize}
+    \item Documento: Información registrada como evidencia de actividades.
+    \item Metadato: Dato que describe contexto, contenido y estructura de un documento.
+    \item Serie documental: Conjunto de documentos relacionados por función o actividad.
+    \item Autenticidad: Garantía de que el documento es lo que pretende ser.
+    \item Integridad: Que el documento no ha sido alterado de manera no autorizada.
+\end{itemize}
+
+\subsection{Matriz de trazabilidad ISO ↔ Requisitos}
+\begin{longtable}{p{3cm}p{3cm}p{8cm}}
+\toprule
+\textbf{Norma ISO} & \textbf{Capítulo} & \textbf{Requisito aplicado} \\
+\midrule
+ISO 15489 & 7–9 & Procesos del ciclo de vida del documento \\
+ISO 30301 & 4–10 & Sistema de gestión y auditoría \\
+ISO 23081 & 5–7 & Estructura y gestión de metadatos \\
+ISO 16175 & 6–9 & Funcionalidades del sistema (captura, clasificación, auditoría) \\
+ISO 26102 & 5–8 & Requisitos técnicos, trazabilidad y conformidad \\
+\bottomrule
+\end{longtable}
+
+\end{document}
