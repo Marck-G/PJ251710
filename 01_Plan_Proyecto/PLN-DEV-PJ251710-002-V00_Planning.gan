@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="PJ251710" company="Katalyst" webLink="http://" view-date="2025-10-21" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.3.3316" locale="es_ES">
+<?xml version="1.0" encoding="UTF-8"?><project name="PJ251710" company="Katalyst" webLink="http://" view-date="2025-10-20" view-index="0" gantt-divider-location="770" resource-divider-location="300" version="3.3.3316" locale="en_GB">
     <description><![CDATA[Gestor Documental]]></description>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd15" name="Notas" width="20" order="-1"/>
-        <field id="tpd3" name="Nombre" width="200" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="75" order="1"/>
-        <field id="tpd5" name="Fecha de fin" width="75" order="2"/>
-        <option id="taskLabelUp" value="name"/>
-        <option id="taskLabelDown" value="taskDates"/>
-        <option id="taskLabelLeft" value="advancement"/>
+    <view zooming-state="default:3" id="gantt-chart">
+        <field id="tpd14" name="Task color" width="20" order="0"/>
+        <field id="tpd3" name="Name" width="256" order="0"/>
+        <field id="tpd4" name="Begin date" width="96" order="1"/>
+        <field id="tpd5" name="End date" width="96" order="2"/>
+        <field id="tpd8" name="Coordinator" width="256" order="3"/>
+        <field id="tpc0" name="Code" width="65" order="4"/>
+        <field id="tpd15" name="Notes" width="20" order="4"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[0]]></timeline>
+        <timeline><![CDATA[14,0]]></timeline>
+        <option id="color.recent"><![CDATA[#cc0000 #cc00cc #3333ff #ffcc33 #6666ff #0033ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nombre" width="210" order="0"/>
-        <field id="1" name="Función" width="86" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -69,10 +70,105 @@
             <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+            <taskproperty id="tpc0" name="Code" type="custom" valuetype="text" defaultvalue="00"/>
         </taskproperties>
-        <task id="0" uid="9e8f5be2f6134de6b3f7e58ad83535ae" name="[PJ-00] Preparacion De entorno" shape="1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1" meeting="true" start="2025-10-21" duration="0" complete="0" thirdDate="2025-10-21" thirdDate-constraint="1" expand="true">
-            <task id="1" uid="15ec135fad1a4640ac7d850357f7a5b0" name="[PJ-0001] Configurar Mono Repo" meeting="false" start="2025-10-21" duration="1" complete="0" expand="true"/>
-            <task id="2" uid="f468f7f7d6184be4bc9e8f26744f606c" name="[PJ-0002] Levantar Contenedores Base" meeting="false" start="2025-10-22" duration="3" complete="0" thirdDate="2025-10-22" thirdDate-constraint="1" expand="true"/>
+        <task id="0" uid="9e8f5be2f6134de6b3f7e58ad83535ae" name="[PJ-00] Preparacion De entorno" color="#0033ff" shape="1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1" meeting="true" start="2025-10-23" duration="0" complete="0" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value="00"/>
+            <task id="1" uid="15ec135fad1a4640ac7d850357f7a5b0" name="[PJ-0001] Configurar Mono Repo" color="#3333ff" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="false" start="2025-10-23" duration="1" complete="0" expand="true">
+                <notes><![CDATA[Configurar repositorio monorepo y estructura base (Rust + Python + shared)]]></notes>
+                <depend id="2" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="00 01"/>
+            </task>
+            <task id="2" uid="f468f7f7d6184be4bc9e8f26744f606c" name="[PJ-0002] Levantar Contenedores Base" color="#3333ff" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="false" start="2025-10-24" duration="3" complete="0" thirdDate="2025-10-22" thirdDate-constraint="1" expand="true">
+                <notes><![CDATA[Levantar contenedores base: PostgreSQL, RabbitMQ, OpenSearch, Docker Compose]]></notes>
+                <depend id="3" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="00 02"/>
+            </task>
+            <task id="3" uid="72e703b96c154938a096f85f72ed0a96" name="[PJ-0003] Configuración de redes y volúmenes" color="#3333ff" meeting="false" start="2025-10-29" duration="4" complete="0" thirdDate="2025-10-21" thirdDate-constraint="1" expand="true">
+                <notes><![CDATA[Configuración de redes internas, volúmenes persistentes, pruebas de conectividad entre servicios]]></notes>
+                <depend id="4" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="00 03"/>
+            </task>
+            <task id="4" uid="868a41b508db4d5794168749c808cd65" name="[PJ-0004] Desarrollo de guías" color="#3333ff" meeting="false" start="2025-11-04" duration="5" complete="0" expand="true">
+                <notes><![CDATA[Documentación inicial del stack y guías de desarrollo]]></notes>
+                <depend id="15" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="00 04"/>
+            </task>
+            <task id="15" uid="4bd217f444154456a836e352fb927468" name="[PJ-0005] Documentación inicial de entorno" color="#3333ff" meeting="false" start="2025-11-11" duration="1" complete="0" expand="true">
+                <customproperty taskproperty-id="tpc0" value="00 05"/>
+            </task>
+        </task>
+        <task id="5" uid="08b6c5ea11204076a7fd5432f26dc0db" name="[PJ-01] Desarrollo microservicios Rust" color="#ffcc33" meeting="true" start="2025-11-18" duration="0" complete="0" expand="false">
+            <customproperty taskproperty-id="tpc0" value="01"/>
+            <task id="6" uid="946b6e2e5f9e42c29d58e18768a93402" name="[PJ-0101] sgd-core-documents" color="#ffcc33" meeting="false" start="2025-11-18" duration="5" complete="0" thirdDate="2025-10-21" thirdDate-constraint="1" expand="true">
+                <notes><![CDATA[CRUD documentos, hash, triggers outbox, MQ]]></notes>
+                <depend id="7" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 01"/>
+            </task>
+            <task id="7" uid="fab5f8ebcd8e4aeda7d4e93170379ae1" name="[PJ-0102] sgd-versions" color="#ffcc33" meeting="false" start="2025-11-25" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Control versiones, incremento automático, eventos MQ]]></notes>
+                <depend id="8" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 02"/>
+            </task>
+            <task id="8" uid="e27c633515974bebb4b9b23724adcd3d" name="[PJ-0103] sgd-trd" color="#ffcc33" meeting="false" start="2025-12-01" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Gestión series documentales, TRD, MQ]]></notes>
+                <depend id="9" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 03"/>
+            </task>
+            <task id="9" uid="94536ba38ae44a2fa13e40276218e993" name="[PJ-0104] sgd-audit" color="#ffcc33" meeting="false" start="2025-12-05" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Auditoría encadenada, exportación JSON/XML]]></notes>
+                <depend id="10" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 04"/>
+            </task>
+            <task id="10" uid="c9ea30d98dc54789b078c771086fc1da" name="[PJ-0105] sgd-relations" color="#ffcc33" meeting="false" start="2025-12-12" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Relaciones documentos, MQ]]></notes>
+                <depend id="11" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 05"/>
+            </task>
+            <task id="11" uid="ab8c18fce14c4508bd543e720226b49b" name="[PJ-0106] sgd-indexer" color="#ffcc33" meeting="false" start="2025-12-18" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Indexación en OpenSearch, sincronización eventos]]></notes>
+                <depend id="12" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 06"/>
+            </task>
+            <task id="12" uid="1f30ada076cd49348dc3907c0d1bd376" name="[PJ-0107] sgd-policy-engine" color="#ffcc33" meeting="false" start="2025-12-24" duration="4" complete="0" expand="true">
+                <notes><![CDATA[Motor de políticas, retención documental, eventos MQ]]></notes>
+                <depend id="13" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="01 07"/>
+            </task>
+            <task id="13" uid="10bbb3028c824e6ab2877697b3eb51dc" name="[PJ-0108] sgd-events-outbox" color="#ffcc33" meeting="false" start="2025-12-31" duration="3" complete="0" expand="true">
+                <notes><![CDATA[Publicación de eventos pendientes a RabbitMQ]]></notes>
+                <customproperty taskproperty-id="tpc0" value="01 08"/>
+            </task>
+        </task>
+        <task id="14" uid="afc70a168db6461a97afadc073ede1a3" name="[PJ-02] SDK" color="#cc00cc" meeting="true" start="2025-11-12" duration="0" complete="0" expand="true">
+            <customproperty taskproperty-id="tpc0" value="02"/>
+            <task id="16" uid="9ef6ab85d6474418adc2141f97c61636" name="[PJ-0201] Librerías Rust" color="#cc00cc" meeting="false" start="2025-11-12" duration="4" complete="0" expand="true">
+                <depend id="6" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="02 01"/>
+            </task>
+            <task id="17" uid="9665bbea1e2648cc8394c5f70317a707" name="[PJ-0202] Librerías Python" color="#cc00cc" meeting="false" start="2025-11-12" duration="4" complete="0" expand="true">
+                <depend id="18" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="02 02"/>
+            </task>
+        </task>
+        <task id="18" uid="b07c3833ee394c8686e147b7a758f0c7" name="[PJ-03] API Gateway" color="#cc0000" meeting="true" start="2025-11-18" duration="0" complete="0" expand="true">
+            <customproperty taskproperty-id="tpc0" value="03"/>
+            <task id="19" uid="01579345223143e3bf1f91b995c946a3" name="[PJ-0301] Estructura y Base" color="#cc0000" meeting="false" start="2025-11-18" duration="2" complete="0" expand="true">
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="03 01"/>
+            </task>
+            <task id="20" uid="e334fde6dbef4a9aaa075c032f36e2a9" name="[PJ-0302] Comunicación MQ" color="#cc0000" meeting="false" start="2025-11-20" duration="3" complete="0" expand="true">
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="03 02"/>
+            </task>
+            <task id="21" uid="041e0fbd4ff746eeb914e28e75d4a0ff" name="[PJ-0303] Autenticación y Seguridad" color="#cc0000" meeting="false" start="2025-11-25" duration="2" complete="0" expand="true">
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="03 03"/>
+            </task>
+            <task id="22" uid="f3d86c6d16e44ced859fe4c0cd4d71b8" name="[PJ-0304] Endpoints" color="#cc0000" meeting="false" start="2025-11-27" duration="6" complete="0" expand="true">
+                <customproperty taskproperty-id="tpc0" value="03 04"/>
+            </task>
         </task>
     </tasks>
     <resources/>
@@ -80,5 +176,9 @@
     <vacations/>
     <previous/>
     <roles roleset-name="Default"/>
-    <roles roleset-name="SoftwareDevelopment"/>
+    <roles>
+        <role id="1" name="DevOps"/>
+        <role id="2" name="Developer"/>
+        <role id="3" name="Manager"/>
+    </roles>
 </project>
