@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="PJ251710" company="Katalyst" webLink="http://" view-date="2025-10-20" view-index="0" gantt-divider-location="770" resource-divider-location="300" version="3.3.3316" locale="en_GB">
+<?xml version="1.0" encoding="UTF-8"?><project name="PJ251710" company="Katalyst" webLink="http://" view-date="2025-10-08" view-index="0" gantt-divider-location="648" resource-divider-location="572" version="3.3.3316" locale="es_ES">
     <description><![CDATA[Gestor Documental]]></description>
     <view zooming-state="default:3" id="gantt-chart">
-        <field id="tpd14" name="Task color" width="20" order="0"/>
-        <field id="tpd3" name="Name" width="256" order="0"/>
-        <field id="tpd4" name="Begin date" width="96" order="1"/>
-        <field id="tpd5" name="End date" width="96" order="2"/>
-        <field id="tpd8" name="Coordinator" width="256" order="3"/>
-        <field id="tpc0" name="Code" width="65" order="4"/>
-        <field id="tpd15" name="Notes" width="20" order="4"/>
+        <field id="tpd3" name="Nombre" width="215" order="1"/>
+        <field id="tpd4" name="Fecha de inicio" width="81" order="2"/>
+        <field id="tpd5" name="Fecha de fin" width="81" order="3"/>
+        <field id="tpd8" name="Coordinador" width="215" order="4"/>
+        <field id="tpc0" name="Code" width="55" order="0"/>
+        <option id="taskLabelUp" value="advancement"/>
+        <option id="taskLabelDown" value="name"/>
+        <option id="taskLabelLeft" value="resources"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
@@ -16,8 +17,12 @@
         <option id="color.recent"><![CDATA[#cc0000 #cc00cc #3333ff #ffcc33 #6666ff #0033ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="210" order="0"/>
-        <field id="1" name="Default role" width="86" order="1"/>
+        <field id="7" name="Carga total" width="61" order="0"/>
+        <field id="6" name="Coste total" width="61" order="1"/>
+        <field id="5" name="Tarifa estándar" width="84" order="2"/>
+        <field id="2" name="correo electrónico" width="83" order="3"/>
+        <field id="0" name="Nombre" width="186" order="4"/>
+        <field id="1" name="Función" width="93" order="5"/>
     </view>
     <!-- -->
     <calendars>
@@ -141,7 +146,7 @@
                 <customproperty taskproperty-id="tpc0" value="01 08"/>
             </task>
         </task>
-        <task id="14" uid="afc70a168db6461a97afadc073ede1a3" name="[PJ-02] SDK" color="#cc00cc" meeting="true" start="2025-11-12" duration="0" complete="0" expand="true">
+        <task id="14" uid="afc70a168db6461a97afadc073ede1a3" name="[PJ-02] SDK" color="#cc00cc" meeting="true" start="2025-11-12" duration="0" complete="0" expand="false">
             <customproperty taskproperty-id="tpc0" value="02"/>
             <task id="16" uid="9ef6ab85d6474418adc2141f97c61636" name="[PJ-0201] Librerías Rust" color="#cc00cc" meeting="false" start="2025-11-12" duration="4" complete="0" expand="true">
                 <depend id="6" type="2" difference="0" hardness="Strong"/>
@@ -152,7 +157,7 @@
                 <customproperty taskproperty-id="tpc0" value="02 02"/>
             </task>
         </task>
-        <task id="18" uid="b07c3833ee394c8686e147b7a758f0c7" name="[PJ-03] API Gateway" color="#cc0000" meeting="true" start="2025-11-18" duration="0" complete="0" expand="true">
+        <task id="18" uid="b07c3833ee394c8686e147b7a758f0c7" name="[PJ-03] API Gateway" color="#cc0000" meeting="true" start="2025-11-18" duration="0" complete="0" expand="false">
             <customproperty taskproperty-id="tpc0" value="03"/>
             <task id="19" uid="01579345223143e3bf1f91b995c946a3" name="[PJ-0301] Estructura y Base" color="#cc0000" meeting="false" start="2025-11-18" duration="2" complete="0" expand="true">
                 <depend id="20" type="2" difference="0" hardness="Strong"/>
@@ -171,8 +176,34 @@
             </task>
         </task>
     </tasks>
-    <resources/>
-    <allocations/>
+    <resources>
+        <resource id="0" name="Marck D. Carrión Guzmán" function="3" contacts="marckcarrion@gmail.com" phone="">
+            <rate name="standard" value="140"/>
+        </resource>
+        <resource id="1" name="Dev 1" function="2" contacts="" phone="">
+            <rate name="standard" value="20"/>
+        </resource>
+        <resource id="2" name="Dev 2" function="2" contacts="" phone="">
+            <rate name="standard" value="20"/>
+        </resource>
+        <resource id="3" name="Dev 3" function="2" contacts="" phone="">
+            <rate name="standard" value="20"/>
+        </resource>
+        <resource id="4" name="Senior 1" function="2" contacts="" phone="">
+            <rate name="standard" value="40"/>
+        </resource>
+        <resource id="5" name="DevOps" function="1" contacts="" phone="">
+            <rate name="standard" value="30"/>
+        </resource>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="3" responsible="true" load="0.0"/>
+        <allocation task-id="2" resource-id="5" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="5" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="5" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="15" resource-id="5" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="1" resource-id="5" function="1" responsible="true" load="100.0"/>
+    </allocations>
     <vacations/>
     <previous/>
     <roles roleset-name="Default"/>
