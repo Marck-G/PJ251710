@@ -1,0 +1,70 @@
+\subsection{Docker Compose}
+Primeramente deberemos crear un archivo \texttt{docker-compose.yml} con el siguiente contenido:
+\begin{verbatim}
+services:
+  samba-ad-dc:
+    image: vanleuken/samba4-ad-dc
+    container_name: samba-ad-dc
+    hostname: ad
+    environment:
+      - DOMAIN=example.local
+      - REALM=EXAMPLE.LOCAL
+      - ADMIN_PASSWORD=Passw0rd!
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+      - "88:88"
+      - "135:135"
+      - "137-138:137-138/udp"
+      - "139:139"
+      - "389:389"
+      - "445:445"
+      - "464:464"
+      - "636:636"
+      - "3268-3269:3268-3269"
+      - "49152-49155:49152-49155"
+    volumes:
+      - samba_data:/var/lib/samba
+      - samba_etc:/etc/samba
+
+  lam:
+    image: ghcr.io/ldapaccountmanager/lam:latest
+    container_name: ldap-account-manager
+    ports:
+      - "8080:80"
+    environment:
+      - LDAP_SERVER=samba-ad-dc
+      - LDAP_BASE_DN=DC=example,DC=local
+    depends_on:
+      - samba-ad-dc
+
+volumes:
+  samba_data:
+  samba_etc:
+\end{verbatim}
+Este archivo define dos servicios: \texttt{samba-ad-dc} para el servidor Samba
+Active Directory y \texttt{lam} para la interfaz web de administración LDAP Account Manager.
+\subsection{Iniciar los contenedores}
+Para iniciar los contenedores, ejecutamos el siguiente comando en el directorio donde se encuentra
+el archivo \texttt{docker-compose.yml}:
+\begin{verbatim}
+docker-compose up -d
+\end{verbatim}
+Esto descargará las imágenes necesarias y levantará los contenedores en segundo plano.
+\subsection{Acceder a LDAP Account Manager}
+Una vez que los contenedores estén en funcionamiento, podemos acceder a la interfaz web de LDAP
+Account Manager abriendo un navegador web y navegando a \url{http://localhost:808
+0}. El nombre de usuario predeterminado es \texttt{lam} y la
+contraseña es \texttt{lam}.
+\subsection{Configuración inicial}
+Al iniciar sesión por primera vez, se nos pedirá configurar la conexión LDAP. Utilizamos los
+siguientes parámetros:
+\begin{itemize}
+    \item \textbf{Servidor LDAP:} \texttt{samba-ad-dc}
+    \item \textbf{Base DN:} \texttt{DC=example,DC=local}
+    \item \textbf{Usuario:} \texttt{Administrator@example.local}
+    \item \textbf{Contraseña:} \texttt{Passw0rd!}
+\end{itemize}
+Después de configurar la conexión, podremos gestionar usuarios, grupos y otros objetos en el
+servidor Samba Active Directory a través de la interfaz web de LDAP Account Manager.
+

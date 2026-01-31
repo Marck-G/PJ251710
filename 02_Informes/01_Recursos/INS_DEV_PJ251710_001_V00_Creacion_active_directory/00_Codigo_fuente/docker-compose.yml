@@ -1,0 +1,44 @@
+
+services:
+  samba-ad:
+    build: .
+    container_name: samba-ad
+    hostname: ad
+    environment:
+      - DOMAIN=katalyst.local
+      - REALM=KATALYST.LOCAL
+      - ADMIN_PASS=Passw0rd!
+      - DEBUG=0
+    ports:
+      - "1053:53/udp"
+      - "1053:53/tcp"
+      - "1088:88"
+      - "1135:135"
+      - "1137-1138:137-138/udp"
+      - "1139:139"
+      - "1389:389"
+      - "1445:445"
+      - "1464:464"
+      - "1636:636"
+      - "3268-3269:3268-3269"
+      - "49152-49155:49152-49155"
+    volumes:
+      - samba_data:/var/lib/samba:rw
+      - samba_etc:/etc/samba:rw
+      - samba_certs:/usr/local/samba/private/tls/:rw
+
+  lam:
+    image: ghcr.io/ldapaccountmanager/lam:latest
+    container_name: ldap-account-manager
+    ports:
+      - "8080:80"
+    environment:
+      - LDAP_SERVER=samba-ad
+      - LDAP_BASE_DN=DC=katalyst,DC=local
+    depends_on:
+      - samba-ad
+
+volumes:
+  samba_data:
+  samba_etc:
+  samba_certs:

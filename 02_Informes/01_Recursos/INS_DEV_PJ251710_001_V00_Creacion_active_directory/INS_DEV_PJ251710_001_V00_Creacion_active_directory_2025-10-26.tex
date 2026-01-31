@@ -1,0 +1,77 @@
+\documentclass[a4paper,twoside,draft,onecolumn]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+% Import other latex documents
+\usepackage{import}
+% Use two or more columns 
+\usepackage{multicol}
+\setlength{\columnsep}{1cm} % Set the space between columns
+
+\author{Marck D. Carri\'on Guzm\'an}
+\date{2025-10-26}
+\title{Instructivo: Crear un servidor LDPA}
+\begin{document}
+\maketitle
+\begin{center}
+\vspace*{2cm}
+    \begin{tabular}{l|l}
+        Nombre del documento & Instructivo: Crear un servidor LDAP \\
+        Área & Desarrollo \\
+        Codigo& INS-DEV-PJ251710-001 \\
+        Versi\'on& 00 \\
+        Fecha de emisi\'on& 2025-10-26 \\
+        Revisi\'on& 0 \\
+        Autor& Marck D. Carri\'on Guzm\'an \\
+        Aprobaci\'on& Marck D. Carri\'on Guzm\'an \\
+        CSV& 0000000000 \\
+        UUID& 00000000-0000-0000-0000-000000000000 \\
+        Keywords& LDAP, Servidor, Directorio, Active Directory \\
+    \end{tabular}
+    
+\end{center}
+\vspace{1cm}
+\includegraphics[width=5cm]{./barcode.png}
+\hspace{1cm}
+\includegraphics[width=5cm]{./qr.png}
+% break the page and columns
+\newpage
+\tableofcontents
+\newpage
+\section{Objetivo}
+El objetivo de este instructivo es guiar al usuario en la creación de un servidor LDAP (Lightweight Directory Access Protocol) para la gestión centralizada de usuarios y recursos en una red, montando todo el entorno en docker.
+\section{Alcance}
+Este instructivo está dirigido a administradores de sistemas y redes que deseen implementar un servidor LDAP en su infraestructura.
+\section{Responsables}
+El responsable de la implementación y mantenimiento del servidor LDAP será el administrador de sistemas designado por la organización.
+\section{Definiciones}
+\begin{itemize}
+    \item \textbf{LDAP:} Protocolo ligero de acceso a directorios utilizado para gestionar y acceder a servicios de directorio.
+    \item \textbf{Servidor LDAP:} Sistema que almacena y organiza información en una estructura jerárquica, permitiendo el acceso y gestión de datos.
+    \item \textbf{Active Directory:} Servicio de directorio desarrollado por Microsoft que utiliza LDAP para gestionar usuarios y recursos en una red.
+    \item \textbf{Esquema LDAP:} Conjunto de reglas que definen la estructura y los atributos de los objetos almacenados en el servidor LDAP.
+    \item \textbf{DN (Distinguished Name):} Nombre único que identifica un objeto en el directorio LDAP.
+    \item \textbf{LDIF (LDAP Data Interchange Format):} Formato de archivo utilizado para importar y exportar datos en un servidor LDAP.
+    \item \textbf{SSL/TLS:} Protocolos de seguridad que proporcionan cifrado para las comunicaciones entre el cliente y el servidor LDAP.
+    \item \textbf{Bind:} Proceso de autenticación de un cliente al servidor LDAP.
+    \item \textbf{Base DN:} Punto de partida en la jerarquía del directorio LDAP desde donde se realizan las búsquedas.
+    \item \textbf{ACL (Access Control List):} Lista que define los permisos de acceso a los objetos y atributos en el servidor LDAP.
+    \item \textbf{Replication:} Proceso de sincronización de datos entre múltiples servidores LDAP para garantizar la disponibilidad y consistencia de la información.
+\end{itemize}
+\section{Marco te\'orico}
+LDAP (Lightweight Directory Access Protocol) es un protocolo utilizado para acceder y gestionar servicios de directorio. Un servidor LDAP almacena información en una estructura jerárquica, permitiendo la gestión centralizada de usuarios, grupos y otros recursos en una red. Active Directory es una implementación popular de un servicio de directorio que utiliza LDAP como su protocolo principal. La creación de un servidor LDAP implica la instalación y configuración del software necesario, la definición del esquema LDAP
+y la configuración de la seguridad y los permisos de acceso. Este instructivo guiará al usuario a través de los pasos necesarios para crear un servidor LDAP utilizando contenedores Docker, facilitando así su implementación y gestión.
+\subsection{Usuarios, Grupos, y Unidades Organizativas}
+En LDAP, los usuarios son representados como entradas en el directorio con atributos específicos como nombre, correo electrónico y contraseña. Los grupos son colecciones de usuarios que comparten permisos y roles similares
+y se utilizan para simplificar la gestión de acceso. Las Unidades Organizativas (OU) son contenedores lógicos que permiten organizar usuarios y grupos en una estructura jerárquica, facilitando la administración y aplicación de políticas.
+\subsection{CN, OU, C, DC, UID }
+En LDAP, CN (Common Name) representa el nombre común de un objeto, como un usuario o grupo. OU (Organizational Unit) es una unidad organizativa que agrupa objetos relacionados. C (Country) indica el país asociado con el objeto. DC (Domain Component) representa los componentes del dominio en la estructura del directorio. UID (User Identifier) es un identificador único asignado a cada usuario en el sistema LDAP.
+
+\section{Procedimiento}
+% import the procedimiento.tex file
+\import{.}{procedimiento.tex}
+\end{document}
